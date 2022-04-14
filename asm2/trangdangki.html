@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dang ky</title>
+
+    <style>
+        [name='formdk'] {
+            width: 600px;
+            margin: auto;
+            background-color: rgba(239, 161, 16, 0.968);
+            background-image: url(bg.jpg);
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        label {
+            color: rgb(19, 33, 188);
+            width: 90px;
+            display: inline-block;
+            height: 25px;
+            top: -3px;
+            position: relative;
+        }
+
+        div {
+            padding: 8px 0;
+        }
+
+        #ntn {
+            display: inline-block;
+            width: 450px;
+            padding: 10px
+        }
+
+        #ntn input {
+            width: 50px;
+            margin-left: 10px;
+            height: 25px;
+        }
+
+        .txt {
+            width: 480px;
+            /* background-color: gold;
+            border: none; */
+            height: 25px;
+        }
+
+        span {
+            width: 120px;
+            display: inline-block;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+        }
+
+        .err {
+            color: rgb(26, 255, 0);
+            width: 220px;
+            margin-left: 20px;
+        }
+        .h3{
+            color: red ;
+            background-color: red ;
+        }
+    </style>
+</head>
+
+<body>
+    <h3> <center>TRANG ĐĂNG KÝ </center> </h3>
+    <form name="formdk">
+        <div>
+            <label>Họ </label>
+            <input type="text" name="ho" class="txt">
+        </div>
+        <div>
+            <label>Tên</label>
+            <input type="text" name="ten" class="txt">
+            <span class="err" id="errTen"></span>
+        </div>
+        <div>
+            <label>Ngày sinh</label>
+            <fieldset id="ntn">
+                Ngày <input type="number" name="ngay" min="1" max="31"> Tháng <input type="number" name="thang" min="1"
+                    max="12"> Năm <input type="number" name="nam" min="1950" max="2010">
+            </fieldset>
+        </div>
+        <div>
+            <label>Giới tính</label>
+            <input type="radio" name="gioitinh" value="1">Nam
+            <input type="radio" name="gioitinh" value=0>Nữ
+        </div>
+        <div>
+            <label>Điện thoại</label>
+            <input type="text" name="dienthoai" class="txt">
+        </div>
+        <div>
+            <label>Email</label>
+            <input type="text" name="email" class="txt">
+        </div>
+        <div>
+            <label>Sở thích</label>
+            <fieldset id="ntn">
+                <input type="checkbox" name="sothich"><span>Đọc sách</span>
+                <input type="checkbox" name="sothich"><span>Xem phim</span> <br>
+                <input type="checkbox" name="sothich"><span>Nghe nhạc</span>
+                <input type="checkbox" name="sothich"><span>Đá bóng</span> <br>
+                <input type="checkbox" name="sothich"><span>May vá</span>
+                <input type="checkbox" name="sothich"><span>Web</span>
+            </fieldset>
+        </div>
+        <div>
+            <label></label>
+           <a href="/asm2/giohang/index.html"> <button type="submit" onclick="return checkData();">Đăng ký</button> </a> 
+        </div>
+    </form>
+    <script>
+        function checkData() {
+            if (!checkHo()) return;
+            if (!checkTen()) return;
+            if (!checkNgayThangNam()) return;
+            if (!checkGT()) return;
+            if (!checkSDT()) return;
+            if (!checkSoThich()) return;
+            alert("dang ky thanh cong!")
+        }
+        function checkHo() {
+            var ho = document.forms["formdk"]["ho"];
+            if (ho.value == "") {
+                alert(" vui long nhap ho");
+                ho.focus();
+                return false;
+            }
+            return true;
+        }
+        function checkTen() {
+            var ten = document.forms["formdk"]["ten"];
+            if (ten.value == "") {
+                document.getElementById("errTen").innerText = "ten kh dc bo rong";
+                alert(" vui long nhap ten");
+                ten.focus();
+                return false;
+            } document.getElementById("errTen").innerText = "";
+            return true;
+        }
+
+        function checkNgayThangNam() {
+            var ngay = document.forms["formdk"]["ngay"];
+            var thang = document.forms["formdk"]["thang"]
+            var nam = document.forms["formdk"]["nam"]
+            if (ngay.value == "") {
+                alert("vui long nhap ngay");
+                ngay.focus();
+                return false;
+            }
+            if (thang.value == "") {
+                alert("vui long nhap thang");
+                thang.focus();
+                return false;
+            }
+            if (nam.value == "") {
+                alert("vui long nhap nam");
+                nam.focus();
+                return false;
+            }
+
+            function checkGT() {
+                var gioitinh = document.forms["formdk"]["gioitinh"];
+                console.log(gioitinh);
+                if (!gioitinh[0].checked && !gioitinh[1].checked) {
+                    alert(" vui long chon nam hoac nu ");
+                    gioitinh.focus();
+                    return false;
+                }
+                return true;
+            }
+            function checkSDT() {
+                var dienthoai = document.forms["formdk"]["dienthoai"];
+                if (dienthoai.value == "") {
+                    alert(" vui long nhap sdt ");
+                    dienthoai.focus();
+                    return false;
+                }
+                return true;
+            }
+
+            function checkSoThich() {
+                var sothich = document.forms["formdk"]["sothich"];
+                var i;
+                for (i = 0; i < sothich.length; i++) {
+                    if (sothich[i].checked) break;
+                }
+                if (i == sothich.length) {
+                    alert(" vui long chon so thich ");
+                    sothich.focus();
+                    return false;
+                }
+                return true;
+            }
+        }
+
+    </script>
+</body>
